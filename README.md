@@ -1,7 +1,7 @@
 # Java-lightshot-image-scraper
 Lightshot image dumper/scraper (prnt.sc, prntscr.com)
 
-Used Librarsy: Jsoup
+Used Librarys: Jsoup
 
 Images:
 
