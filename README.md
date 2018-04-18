@@ -5,4 +5,6 @@ Used Librarys: Jsoup
 
 Images:
 
-![dumper1](https://user-images.githubusercontent.com/25563847/38902307-5193d4a6-42a0-11e8-9be2-9caab3f3ebbf.png)
+![dumper1](https://user-images.githubusercontent.com/25563847/38959846-81ce5872-4362-11e8-82be-f99b6ba49a6c.png)
+
+Double click on an item to open it in the browser.
