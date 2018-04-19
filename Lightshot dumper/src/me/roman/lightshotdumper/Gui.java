@@ -22,6 +22,7 @@ import javax.swing.JSpinner;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import java.awt.Color;
+import javax.swing.JCheckBox;
 
 public class Gui extends JFrame {
 
@@ -44,6 +45,11 @@ public class Gui extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
+		JCheckBox removeAfterOpen = new JCheckBox("Remove link after opening");
+		removeAfterOpen.setSelected(true);
+		removeAfterOpen.setBounds(113, 272, 151, 23);
+		contentPane.add(removeAfterOpen);
+		
 		DefaultListModel<String> dlm = new DefaultListModel<String>();
 	    JList<String> list = new JList<>(dlm);
 	    list.addMouseListener(new MouseAdapter() {
@@ -51,6 +57,9 @@ public class Gui extends JFrame {
 	            if (e.getClickCount() == 2) {
 	            	String value = (String)list.getModel().getElementAt(list.locationToIndex(e.getPoint()));
 	                Utils.openWebpage(value);
+	                
+	                if(removeAfterOpen.isSelected())
+	                dlm.remove(list.locationToIndex(e.getPoint()));
 	            }
 	        }
 	    });
@@ -64,12 +73,12 @@ public class Gui extends JFrame {
 		
 		JLabel validLabel = new JLabel("Valid: 0");
 		validLabel.setForeground(new Color(0, 128, 0));
-		validLabel.setBounds(10, 269, 254, 14);
+		validLabel.setBounds(10, 269, 104, 14);
 		contentPane.add(validLabel);
 		
 		JLabel unvalidLabel = new JLabel("Not valid: 0");
 		unvalidLabel.setForeground(new Color(255, 0, 0));
-		unvalidLabel.setBounds(11, 287, 253, 14);
+		unvalidLabel.setBounds(11, 287, 104, 14);
 		contentPane.add(unvalidLabel);
 		
 		JSpinner countBox = new JSpinner();
@@ -85,20 +94,16 @@ public class Gui extends JFrame {
 					public void run() {
 						Integer count = (Integer) countBox.getValue();
 						for (int i = 0; i < count; i++) {
-							try {
-								String link = Utils.checkLink(Utils.generateRandomLink(6));
-									if(link.endsWith("| VALID IMAGE!")) {
-										dlm.addElement(link.replace("| VALID IMAGE!", "") + "\n");
-										valid++;
-										
-									} else if(link.endsWith("| NOT VALID!")) {
-										unvalid++;
-									}
-									validLabel.setText("Valid: " + valid);
-									unvalidLabel.setText("Not valid: " + unvalid);
-							} catch (IOException e) {
-								e.printStackTrace();
-							}
+							String link = Utils.checkLink(Utils.generateRandomLink(6));
+								if(link.endsWith("| VALID IMAGE!")) {
+									dlm.addElement(link.replace("| VALID IMAGE!", "") + "\n");
+									valid++;
+									
+								} else if(link.endsWith("| NOT VALID!")) {
+									unvalid++;
+								}
+								validLabel.setText("Valid: " + valid);
+								unvalidLabel.setText("Not valid: " + unvalid);
 						}
 						System.out.println("Done!");
 					}

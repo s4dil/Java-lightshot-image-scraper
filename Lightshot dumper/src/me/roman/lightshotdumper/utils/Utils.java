@@ -29,17 +29,21 @@ public class Utils {
 		return "https://prnt.sc/" + s;
 	}
 
-	public static String checkLink(String URL) throws MalformedURLException, IOException {
-		Document doc = Jsoup.connect(URL).get();
-		Element link = doc.getElementById("screenshot-image");
-
+	public static String checkLink(String URL) {
 		String status = null;
-		if (link.attr("src").contains("0_173a7b_211be8ff.png")) {
-			System.out.println(URL + " > NOT VALID!");
-			status = "NOT VALID!";
-		} else {
-			System.out.println(URL + " > VALID IMAGE!");
-			status = "VALID IMAGE!";
+		try {
+			Document doc = Jsoup.connect(URL).get();
+
+			Element link = doc.getElementById("screenshot-image");
+
+			if (link.attr("src").contains("0_173a7b_211be8ff.png")) {
+				System.out.println(URL + " > NOT VALID!");
+				status = "NOT VALID!";
+			} else {
+				System.out.println(URL + " > VALID IMAGE!");
+				status = "VALID IMAGE!";
+			}
+		} catch (IOException e) {
 		}
 		return URL + " | " + status;
 	}
